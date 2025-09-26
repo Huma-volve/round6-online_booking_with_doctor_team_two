@@ -1,27 +1,23 @@
 <?php
-
 namespace App\Mail;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-
-class ResetPasswordMail extends Mailable
+class PasswordResetCode extends Mailable
 {
-  
-   use Queueable, SerializesModels;
+    use Queueable, SerializesModels;
 
-    public $token;
-    public function __construct($token) { $this->token = $token; }
+    public $reset_code;
+    public function __construct($reset_code) { $this->reset_code = $reset_code; }
 
     public function build()
     {
-        return $this->subject('Password Reset')
-                    ->view('emails.reset-password')
-                    ->with(['token' => $this->token]);
+        return $this->subject('Password Reset Code')
+                    ->view('emails.password-reset-code')
+                    ->with(['reset_code' => $this->reset_code]);
     }
     /**
      * Get the message envelope.
@@ -29,7 +25,7 @@ class ResetPasswordMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reset Password Mail',
+            subject: 'Password Reset Code',
         );
     }
 

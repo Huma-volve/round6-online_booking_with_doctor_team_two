@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
 
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
         'full_name', 'phone', 'email', 'age', 'profile_img', 'address', 'role', 'password'
@@ -29,9 +30,9 @@ class User extends Authenticatable
     }
 
     public function tokens()
-    {
-        return $this->hasMany(Token::class);
-    }
+{
+    return $this->morphMany(PersonalAccessToken::class, 'tokenable');
+}
     /**
      * The attributes that should be hidden for serialization.
      *
