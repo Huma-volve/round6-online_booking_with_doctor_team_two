@@ -34,4 +34,14 @@ class Patient extends Model
     {
         return $this->hasMany(History::class);
     }
+    public function cards()
+{
+    return $this->hasMany(Card::class);
+}
+
+public function mobileWallets()
+{
+    return $this->hasMany(MobileWallet::class);
+}
+
 }
