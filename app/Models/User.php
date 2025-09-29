@@ -8,16 +8,28 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
+
+    use HasFactory, Notifiable,HasApiTokens,SoftDeletes;
 
     protected $fillable = [
-        'full_name', 'phone', 'email', 'age', 'profile_img', 'address', 'role', 'password'
+        'full_name',
+         'phone',
+          'email', 
+          'age',
+           'profile_img', 
+           'address',
+            'role', 
+            'password',
+            'stripe_customer_id'
     ];
+
+        protected $dates = ['deleted_at'];
 
     public function doctor()
     {
@@ -53,6 +65,13 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+                'notifications_enabled' => 'boolean',
+
         ];
     }
+    public function mobileWallets()
+{
+    return $this->hasMany(MobileWallet::class, 'patient_id');
+}
+
 }
