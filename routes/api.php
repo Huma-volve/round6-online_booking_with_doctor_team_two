@@ -10,6 +10,12 @@ use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\MobileWalletController;
 use App\Http\Controllers\Api\UserController;
 
+use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\FavouriteController;
+use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\FavouriteController;
+use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\FavouriteController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -60,4 +66,49 @@ Route::middleware('auth:sanctum')->group(function () {
        Route::get('/profile', [UserController::class, 'getProfile']);
     Route::put('/profile', [UserController::class, 'updateProfile']);
     Route::delete('/profile',[UserController::class,'deleteProfile']);
+});
+
+Route::prefix('api')->middleware('auth:sanctum')->group(function () {
+    Route::get('reviews', [ReviewController::class, 'index']);
+    Route::get('reviews/{review}', [ReviewController::class, 'show']);
+    Route::post('doctors/{doctor}/reviews', [ReviewController::class, 'store']);
+    Route::put('reviews/{review}', [ReviewController::class, 'update']);
+    Route::delete('reviews/{review}', [ReviewController::class, 'destroy']);
+    Route::post('reviews/{review}/verify', [ReviewController::class, 'verify']);
+});
+
+Route::prefix('favourites')->group(function () {
+    Route::get('/', [FavouriteController::class, 'index']);
+    Route::post('doctor/{doctor}', [FavouriteController::class, 'store']);
+    Route::delete('doctor/{doctor}', [FavouriteController::class, 'destroy']);
+});
+
+Route::prefix('api')->middleware('auth:sanctum')->group(function () {
+    Route::get('reviews', [ReviewController::class, 'index']);
+    Route::get('reviews/{review}', [ReviewController::class, 'show']);
+    Route::post('doctors/{doctor}/reviews', [ReviewController::class, 'store']);
+    Route::put('reviews/{review}', [ReviewController::class, 'update']);
+    Route::delete('reviews/{review}', [ReviewController::class, 'destroy']);
+    Route::post('reviews/{review}/verify', [ReviewController::class, 'verify']);
+});
+
+Route::prefix('favourites')->group(function () {
+    Route::get('/', [FavouriteController::class, 'index']);
+    Route::post('doctor/{doctor}', [FavouriteController::class, 'store']);
+    Route::delete('doctor/{doctor}', [FavouriteController::class, 'destroy']);
+});
+
+Route::prefix('api')->middleware('auth:sanctum')->group(function () {
+    Route::get('reviews', [ReviewController::class, 'index']);
+    Route::get('reviews/{review}', [ReviewController::class, 'show']);
+    Route::post('doctors/{doctor}/reviews', [ReviewController::class, 'store']);
+    Route::put('reviews/{review}', [ReviewController::class, 'update']);
+    Route::delete('reviews/{review}', [ReviewController::class, 'destroy']);
+    Route::post('reviews/{review}/verify', [ReviewController::class, 'verify']);
+});
+
+Route::prefix('favourites')->group(function () {
+    Route::get('/', [FavouriteController::class, 'index']);
+    Route::post('doctor/{doctor}', [FavouriteController::class, 'store']);
+    Route::delete('doctor/{doctor}', [FavouriteController::class, 'destroy']);
 });
