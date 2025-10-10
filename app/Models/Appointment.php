@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,6 +11,11 @@ class Appointment extends Model
 {
     use HasFactory;
     protected $fillable = ['date', 'time', 'patient_id', 'doctor_id', 'slot_id', 'payment_id', 'status', 'price'];
+
+    protected $casts = [
+        'date' => 'date',
+        'price' => 'decimal:2',
+    ];
 
     public function patient()
     {
@@ -29,5 +35,14 @@ class Appointment extends Model
     public function payment()
     {
         return $this->hasOne(Payment::class);
+    }
+
+    public function getStartsAtAttribute()
+    {
+        if ($this->date && $this->time) {
+            return Carbon::parse($this->date->format('Y-m-d') . ' ' . $this->time);
+        }
+
+        return null;
     }
 }
