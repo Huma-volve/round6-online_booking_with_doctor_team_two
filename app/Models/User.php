@@ -3,12 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use App\Models\Notification;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
 class User extends Authenticatable
@@ -20,11 +21,11 @@ class User extends Authenticatable
     protected $fillable = [
         'full_name',
          'phone',
-          'email', 
+          'email',
           'age',
-           'profile_img', 
+           'profile_img',
            'address',
-            'role', 
+            'role',
             'password',
             'stripe_customer_id'
     ];
@@ -73,5 +74,10 @@ class User extends Authenticatable
 {
     return $this->hasMany(MobileWallet::class, 'patient_id');
 }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
 
 }
